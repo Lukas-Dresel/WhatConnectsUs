@@ -12,11 +12,10 @@ def pkt_callback(pkt):
     udp = pkt[UDP] if UDP in pkt else None
     if ip is None or udp is None:
         return
-    
+
     direction = (udp.sport, udp.dport)
     if udp.sport not in PORTS_OF_INTEREST and udp.dport not in PORTS_OF_INTEREST:
         return
-
     data = bytes(udp.payload)
     if data[0] in {SendOption.Ping.intvalue, SendOption.Acknowledgement.intvalue}:
         return
@@ -32,12 +31,13 @@ def pkt_callback(pkt):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('source', type=str, nargs='?', default='live')
+    parser.add_argument('--interface', type=str, default=None)
     ARGS = parser.parse_args()
 
     print("Listening ...")
     if ARGS.source == 'live':
-        filter = ' or '.join(f'udp port {port}' for port in sorted(PORTS_OF_INTEREST))
-        print(filter)
-        sniff(prn=pkt_callback, filter=filter, store=0)
+        # filter = ' or '.join(f'udp port {port}' for port in sorted(PORTS_OF_INTEREST))
+        # print(filter)
+        sniff(iface='lo', prn=pkt_callback, filter='udp', store=0)
     else:
         sniff(offline=ARGS.source, prn=pkt_callback)
