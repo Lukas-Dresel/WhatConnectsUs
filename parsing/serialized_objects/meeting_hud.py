@@ -1,6 +1,6 @@
 from construct import *
 
-from parse_construct.common import DirtyBits
+from ..common import DirtyBits
 
 
 class VotedForAdapter(Adapter):

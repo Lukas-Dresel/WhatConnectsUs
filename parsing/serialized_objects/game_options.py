@@ -1,26 +1,27 @@
 from construct import *
 
-from parse_construct.common import Bool
-from parse_construct.enums import GameLanguage
+from ..common import Bool
+from ..enums import GameLanguage, KillDistance, LevelId
 
 GameOptions = Struct(
-    "SomeVersionOrSizeFlag" / Byte,
-    "ALGKPIECFPC" / Byte,
+    "Version" / Byte,
+    "NumPlayers" / Byte,
     "SystemLanguage" / GameLanguage,
-    "BFOCEACJOPK" / Byte,
+    "Level" / LevelId,
     "PlayerSpeedMultiplier" / Float32l,
-    "LNKCMDOCNBI" / Float32l,
-    "NFAOBDJKOPH" / Float32l,
-    "HNEKLLKCJOJ" / Float32l,
-    "LNNGPNHGGDN" / Byte,
-    "FFJKPGELKGD" / Byte,
-    "OJLANPDBDGG" / Byte,
-    "JOLOOHKAIAB" / Int32sl,
-    "MAONBFOOEPK" / Byte,
-    "MCHMMCDKECO" / Byte,
-    "IECOKEIAEEE" / Int32sl,
-    "MMJKMHKEAPI" / Int32sl,
-    "MEIOIAOIBOH" / Bool,
-    If(this.SomeVersionOrSizeFlag >= 2, "OEBNJBBLHBD" / Byte),
-    If(this.SomeVersionOrSizeFlag >= 3, "BELGPJKBKGA" / Bool + "KPFLIHLKEBI" / Bool)
+    "CrewmateVisionMultiplier" / Float32l,
+    "ImpostorVisionMultiplier" / Float32l,
+    "KillCooldown" / Float32l,
+    "NumCommonTasks" / Byte,
+    "NumLongTasks" / Byte,
+    "NumShortTasks" / Byte,
+    "NumEmergencyMeetings" / Int32sl,
+    "NumImpostors" / Byte,
+    "KillDistance" / KillDistance,
+    "DiscussionTime" / Int32sl,
+    "VotingTime" / Int32sl,
+    "UseRecommendedSettings" / Bool,
+    "EmergencyCooldown" / If(this.Version >= 2, Byte),
+    "ConfirmEjects" / If(this.Version >= 3, Bool),
+    "VisualTasks" / If(this.Version >= 3, Bool),
 )

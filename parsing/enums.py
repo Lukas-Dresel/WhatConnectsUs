@@ -62,7 +62,7 @@ GameLanguage = FlagsEnum(Int32ul, All=0, Other=1, Spanish=2, Korean=4, Russian=8
 Color = Enum(Byte, Red=0, Blue=1, Green=2, Pink=3, Orange=4, Yellow=5, Black=6, White=7, Purple=8, Brown=9, Cyan=10,
              Lime=11, Fortegreen=12, Tan=13)
 Levels = FlagsEnum(PackedInt, Skeld=1, MiraHQ=2, Polus=4)
-
+LevelId = Enum(Byte, Skeld=0, MiraHQ=1, Polus=2)
 Systems = Enum(Byte, Hallway=0, Storage=1, Cafeteria=2, Reactor=3, UpperEngine=4, Nav=5, Admin=6, Electrical=7,
                LifeSupport_O2=8, Shields=9, MedBay=10, Security=11, Weapons=12, LowerEngine=13, Comms=14, ShipTasks=15,
                Doors=16, Sabotage=17, Decontamination=18, Launchpad=19, LockerRoom=20, Laboratory=21, Balcony=22,
@@ -73,3 +73,5 @@ SpawnId = Enum(PackedInt, ShipStatus=0, MeetingHub=1, Lobby=2, GameData=3, Playe
                AprilShipStatus=7)
 
 MeetingHud_State = Enum(Byte, Discussion=0, NotVoted=1, Voted=2, Results=3, Proceeding=4)
+
+KillDistance = Enum(Byte, Short=0, Medium=1, Long=2)

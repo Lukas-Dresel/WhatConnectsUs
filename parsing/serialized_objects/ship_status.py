@@ -1,6 +1,6 @@
 from construct import *
 
-from parse_construct.common import debug_field, DirtyBits
+from ..common import debug_field, DirtyBits
 
 ShipStatus_Partial = Struct(
     "DirtyBits" / DirtyBits,
