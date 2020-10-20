@@ -7,10 +7,16 @@ from parsing.enums import SendOption
 from parsing.network_packets import Packet_Server, Packet_Client
 
 PORTS_OF_INTEREST = {22023 + i for i in range(0, 1000, 100)}
+SKIP_NEXT = False
 def pkt_callback(pkt):
+    global SKIP_NEXT
     ip = pkt[IP] if IP in pkt else None
     udp = pkt[UDP] if UDP in pkt else None
     if ip is None or udp is None:
+        return
+
+    SKIP_NEXT = not SKIP_NEXT
+    if ARGS.interface == 'lo' and not SKIP_NEXT:
         return
 
     direction = (udp.sport, udp.dport)
@@ -38,6 +44,6 @@ if __name__ == '__main__':
     if ARGS.source == 'live':
         # filter = ' or '.join(f'udp port {port}' for port in sorted(PORTS_OF_INTEREST))
         # print(filter)
-        sniff(iface='lo', prn=pkt_callback, filter='udp', store=0)
+        sniff(iface=ARGS.interface, prn=pkt_callback, filter='udp', store=0)
     else:
         sniff(offline=ARGS.source, prn=pkt_callback)
