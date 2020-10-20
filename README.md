@@ -1,4 +1,4 @@
-# InBetweenUs
+# WhatConnectsUs
 A `pyconstruct`-based python parser for the network protocol of the game `Among Us` (http://www.innersloth.com/gameAmongUs.php).
 
 This is an implementation of the protocol based on my reverse engineering of the game, with some help from the great wiki at https://wiki.weewoo.net/wiki/Main_Page, the cool [Impostor](https://github.com/Impostor/Impostor/) project and the folks in the `Impostor` discord.
