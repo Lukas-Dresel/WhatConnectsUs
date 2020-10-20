@@ -11,11 +11,10 @@ DisconnectReasonInfo = Struct(
             "DisconnectMessage" / If(this.DisconnectReason == DisconnectReason.Custom, String)
 )
 
-DisconnectBody_Client = Terminated
-DisconnectBody_Server = Struct(
+DisconnectBody = Select(Terminated, Struct(
     "HasDisconnectReasonInfo" / Bool,
     "ForcibleDisconnectMessage" / If(this.HasDisconnectReasonInfo, Message(Const(0, Byte), DisconnectReasonInfo))
-)
+))
 
 
 # HELLO
@@ -37,6 +36,7 @@ def Packet(unreliable_subcon, reliable_subcon, disconnect_subcon, hello_subcon=N
             SendOption.Reliable: Int16ub,
             SendOption.Ping: Int16ub,
             SendOption.Acknowledgement: Int16ub,
+            SendOption.Hello: Int16ub,
             }, default=Pass),
         "payload" / Switch(
             keyfunc=this.SendOption, cases={
@@ -54,13 +54,13 @@ def Packet(unreliable_subcon, reliable_subcon, disconnect_subcon, hello_subcon=N
 Packet_Client = Packet(
     unreliable_subcon=GreedyRange(Message_Client),
     reliable_subcon=GreedyRange(Message_Client),
-    disconnect_subcon=DisconnectBody_Client,
+    disconnect_subcon=DisconnectBody,
     hello_subcon=HelloBody_Client
 ) + Terminated
 
 Packet_Server = Packet(
     unreliable_subcon=GreedyRange(Message_Server),
     reliable_subcon=GreedyRange(Message_Server),
-    disconnect_subcon=DisconnectBody_Server,
+    disconnect_subcon=DisconnectBody,
     hello_subcon=HelloBody_Server
 ) + Terminated
