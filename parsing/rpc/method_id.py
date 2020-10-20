@@ -21,6 +21,13 @@ MethodId = Enum(Byte,
                 SetPet              =   0x11,
                 SetStartCounter     =   0x12,
 
+                # PlayerPhysics
+                EnterVent           =   0x13,
+                ExitVent            =   0x14,
+
+                # CustomNetworkTransform
+                SnapTo              =   0x15,
+
                 # MeetingHud
                 CloseMeetingHud     =   0x16,
                 VotingComplete      =   0x17,
