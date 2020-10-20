@@ -3,8 +3,8 @@ import argparse
 from scapy.all import *
 import hexdump
 
-from parse_construct.enums import SendOption
-from parse_construct.network_packets import Packet_Server, Packet_Client
+from parsing.enums import SendOption
+from parsing.network_packets import Packet_Server, Packet_Client
 
 
 def pkt_callback(pkt):
